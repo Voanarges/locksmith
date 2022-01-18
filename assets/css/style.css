@@ -3524,6 +3524,18 @@ Usage: codyhouse.co/license
   -o-object-fit: cover;
      object-fit: cover;
 }
+.about__img {
+  position: relative;
+}
+.about__img:after {
+  content: url("../img/fon.jpg");
+  position: absolute;
+  display: block;
+  min-width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+}
 .about__text {
   background-color: #e8e6e6;
   display: flex;
@@ -3556,6 +3568,10 @@ Usage: codyhouse.co/license
     margin-top: 6rem;
   }
 }
+.custom__marge-top-bot-1rem {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 .custom__marge-but4rem {
   margin-bottom: calc(1.525rem + 3.3vw);
 }
@@ -3585,6 +3601,9 @@ Usage: codyhouse.co/license
 }
 .custom__marge-but120 {
   margin-bottom: 120px;
+}
+.custom__marge-min-but2rem {
+  margin-top: -60px;
 }
 .custom__marge-25tb-c {
   margin: 25px auto;
@@ -4117,6 +4136,12 @@ Usage: codyhouse.co/license
 .title_size_1p2_bold400 {
   font-size: 1.2rem;
   line-height: 1.6rem;
+  font-weight: 400;
+}
+
+.title_size_1p_bold400 {
+  font-size: 1rem;
+  line-height: 1.2rem;
   font-weight: 400;
 }
 
