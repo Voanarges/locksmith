@@ -75,6 +75,15 @@
   --sub-gap-y: var(--space-xs);
 }
 
+.gap-sm {
+  --gap-x: var(--space-sm);
+  --gap-y: var(--space-sm);
+}
+.gap-sm > * {
+  --sub-gap-x: var(--space-sm);
+  --sub-gap-y: var(--space-sm);
+}
+
 .gap-md {
   --gap-x: var(--space-md);
   --gap-y: var(--space-md);
@@ -180,7 +189,7 @@ h1, h2, h3, h4, h5, h6, p, blockquote,
 a, cite, code, img, s,
 small, strong, sub, var,
 b, i, center,
-dl, dt, dd, ol, ul, li, embed,
+dl, dt, dd, ol, ul, li, canvas, embed,
 figure, footer, header,
 menu, nav, section, summary,
 time, audio, video {
@@ -612,6 +621,10 @@ html:not(.js) .no-js\:is-hidden {
   font-size: var(--text-xl, 1.75rem);
 }
 
+.text-xxl {
+  font-size: var(--text-xxl, 2rem);
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -720,6 +733,10 @@ html:not(.js) .no-js\:is-hidden {
   box-shadow: var(--shadow-xs);
 }
 
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
 :root {
   --inner-glow: inset 0 0 0.5px 1px hsla(0, 0%, 100%, 0.075);
   --inner-glow-top: inset 0 1px 0.5px hsla(0, 0%, 100%, 0.075);
@@ -765,12 +782,16 @@ html:not(.js) .no-js\:is-hidden {
   border-radius: var(--radius-md);
 }
 
- [class^=bg-], [class*=" bg-"] {
+.bg, [class^=bg-], [class*=" bg-"] {
   --bg-o: 1;
 }
 
 .bg-dark {
   background-color: hsla(var(--color-bg-dark-h), var(--color-bg-dark-s), var(--color-bg-dark-l), var(--bg-o));
+}
+
+.bg {
+  background-color: hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), var(--bg-o));
 }
 
 .bg-light {
@@ -801,6 +822,10 @@ html:not(.js) .no-js\:is-hidden {
     display: flex;
   }
 
+  .flex-row\@md {
+    flex-direction: row;
+  }
+
   .justify-center\@md {
     justify-content: center;
   }
@@ -813,8 +838,20 @@ html:not(.js) .no-js\:is-hidden {
     margin-top: var(--space-md);
   }
 
+  .margin-top-auto\@md {
+    margin-top: auto;
+  }
+
+  .margin-right-auto\@md {
+    margin-right: auto;
+  }
+
   .padding-lg\@md {
     padding: var(--space-lg);
+  }
+
+  .padding-bottom-0\@md {
+    padding-bottom: 0;
   }
 
   .padding-x-md\@md {
@@ -822,12 +859,29 @@ html:not(.js) .no-js\:is-hidden {
     padding-right: var(--space-md);
   }
 
+  .padding-y-xs\@md {
+    padding-top: var(--space-xs);
+    padding-bottom: var(--space-xs);
+  }
+
   .text-center\@md {
     text-align: center;
   }
 
+  .text-left\@md {
+    text-align: left;
+  }
+
   .text-right\@md {
     text-align: right;
+  }
+
+  .text-xs\@md {
+    font-size: var(--text-xs, 0.6875rem);
+  }
+
+  .text-sm\@md {
+    font-size: var(--text-sm, 0.75rem);
   }
 
   .text-lg\@md {
@@ -2186,6 +2240,139 @@ Usage: codyhouse.co/license
 }
 /* -------------------------------- 
 
+File#: _1_off-canvas-content
+Title: Off-Canvas Content
+Descr: An off-canvas section used for complementary content
+Usage: codyhouse.co/license
+
+-------------------------------- */
+:root {
+  --off-canvas-panel-width: 400px;
+  --off-canvas-panel-width-opposite: -400px;
+  --off-canvas-animation-duration: 0.4s;
+}
+
+.off-canvas {
+  overflow: hidden;
+}
+
+.off-canvas__main {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  will-change: transform;
+  transition: transform var(--off-canvas-animation-duration) var(--ease-in-out);
+}
+
+.off-canvas--visible .off-canvas__main {
+  transform: translateX(100%);
+}
+
+@media (min-width: 32rem) {
+  .off-canvas--visible:not(.off-canvas--full-width) .off-canvas__main {
+    transform: translateX(var(--off-canvas-panel-width));
+  }
+}
+.off-canvas--right.off-canvas--visible .off-canvas__main {
+  transform: translateX(-100%);
+}
+
+@media (min-width: 32rem) {
+  .off-canvas--right.off-canvas--visible:not(.off-canvas--full-width) .off-canvas__main {
+    transform: translateX(var(--off-canvas-panel-width-opposite));
+  }
+}
+.off-canvas--bottom.off-canvas--visible .off-canvas__main {
+  transform: translateY(-100%);
+}
+
+.off-canvas--top.off-canvas--visible .off-canvas__main {
+  transform: translateY(100%);
+}
+
+.off-canvas__close-btn {
+  display: none;
+}
+
+.js .off-canvas__panel {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  background-color: var(--color-bg-dark);
+  transition: visibility var(--off-canvas-animation-duration);
+}
+.js .off-canvas__panel:focus {
+  outline: none;
+}
+@media (min-width: 32rem) {
+  .js .off-canvas:not(.off-canvas--full-width) .off-canvas__panel {
+    width: var(--off-canvas-panel-width);
+  }
+}
+.js .off-canvas__content {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: translateX(-50%);
+  will-change: transform;
+  transition: transform var(--off-canvas-animation-duration) var(--ease-in-out);
+}
+.js .off-canvas__close-btn {
+  --size: 32px;
+  width: var(--size);
+  height: var(--size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: var(--color-bg);
+  box-shadow: var(--inner-glow), var(--shadow-xs);
+  transition: 0.3s;
+}
+.js .off-canvas__close-btn:hover {
+  box-shadow: var(--inner-glow), var(--shadow-sm);
+}
+.js .off-canvas--visible .off-canvas__panel {
+  visibility: visible;
+}
+.js .off-canvas--visible .off-canvas__content {
+  transform: translateX(0);
+}
+.js .off-canvas--visible.off-canvas--bottom, .js .off-canvas--visible.off-canvas--top {
+  transform: translateY(0);
+}
+.js .off-canvas--right .off-canvas__panel {
+  left: auto;
+  right: 0;
+}
+.js .off-canvas--right:not(.off-canvas--visible) .off-canvas__content {
+  transform: translateX(50%);
+}
+.js .off-canvas--bottom:not(.off-canvas--visible) .off-canvas__content {
+  transform: translateY(50px);
+}
+.js .off-canvas--top:not(.off-canvas--visible) .off-canvas__content {
+  transform: translateY(-50px);
+}
+
+.off-canvas--full-width .off-canvas__close-btn {
+  width: 40px;
+  height: 40px;
+}
+@media (min-width: 64rem) {
+  .off-canvas--full-width {
+    --off-canvas-animation-duration: 0.65s;
+  }
+}
+
+/* -------------------------------- 
+
 File#: _1_search-input
 Title: Search input
 Descr: Search input field with custom button
@@ -2743,6 +2930,109 @@ html:not(.js) .f-header__nav {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
+}
+
+/* -------------------------------- 
+
+File#: _2_off-canvas-navigation
+Title: Off-Canvas Navigation
+Descr: An off-canvas section containing the main navigation
+Usage: codyhouse.co/license
+
+-------------------------------- */
+.offnav-control {
+  --anim-menu-btn-size: 48px;
+  --anim-menu-btn-icon-size: 24px;
+  --anim-menu-btn-icon-stroke: 2px;
+  position: fixed;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  z-index: var(--z-index-fixed-element, 10);
+  border-radius: 50%;
+  transition: transform 0.3s var(--ease-in-out);
+  color: var(--color-contrast-high);
+}
+
+.offnav-control.anim-menu-btn--state-b {
+  transform: rotate(180deg);
+}
+
+.offnav-control__bg {
+  display: block;
+  fill: var(--color-bg-light);
+  stroke-width: 1.5;
+  stroke: var(--color-contrast-lower);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.offnav-control--ready-to-animate circle {
+  transition: stroke-dashoffset 0.3s 0s;
+}
+
+.anim-menu-btn--state-b.offnav-control circle {
+  stroke-dashoffset: 0;
+  transition-delay: 0.3s;
+}
+
+.offnav__link {
+  color: var(--color-contrast-higher);
+  text-decoration: none;
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(transparent 60%, hsla(var(--color-primary-h), var(--color-primary-s), var(--color-primary-l), 0.2) 60%);
+  will-change: background-size;
+  transition: background-size 0.3s var(--ease-in-out), color 0.3s;
+}
+
+.offnav__link:hover, .offnav__link[aria-current=page], .offnav__link.offnav__link--current {
+  color: var(--color-primary);
+}
+
+.offnav__link:hover {
+  background-size: 100% 100%;
+}
+
+.offnav__a11y-close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: var(--z-index-fixed-element, 10);
+  background-color: var(--color-contrast-lower);
+  padding: var(--space-sm) var(--space-md);
+  box-shadow: var(--shadow-lg);
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+}
+
+.offnav__a11y-close-btn:focus {
+  clip: auto;
+  -webkit-clip-path: none;
+  clip-path: none;
+  outline: 3px solid var(--color-primary);
+}
+
+@media (min-width: 64rem) {
+  .offnav__label::before {
+    content: "";
+    display: inline-block;
+    width: 2em;
+    height: 1px;
+    background-color: currentColor;
+    vertical-align: middle;
+    margin-right: 0.5em;
+  }
+
+  .offnav__subnav {
+    border-top: 1px solid var(--color-contrast-lower);
+  }
+}
+html:not(.js) .offnav-control {
+  display: none;
 }
 
 /* -------------------------------- 
@@ -3667,6 +3957,9 @@ Usage: codyhouse.co/license
 }
 .custom__text-c {
   text-align: center;
+}
+.custom__text-l {
+  text-align: left;
 }
 .custom__red {
   color: red;
