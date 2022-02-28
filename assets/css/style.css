@@ -521,8 +521,8 @@ html:not(.js) .no-js\:is-hidden {
   display: none;
 }
 
-.margin-md {
-  margin: var(--space-md);
+.margin-auto {
+  margin: auto;
 }
 
 .margin-top-sm {
@@ -531,6 +531,10 @@ html:not(.js) .no-js\:is-hidden {
 
 .margin-top-md {
   margin-top: var(--space-md);
+}
+
+.margin-top-xl {
+  margin-top: var(--space-xl);
 }
 
 .margin-bottom-xxs {
@@ -4439,6 +4443,17 @@ Usage: codyhouse.co/license
 @media (min-width: 1200px) {
   .title_size_2p3_bold500 {
     font-size: 2.3rem;
+  }
+}
+
+.title_size_2_bold500 {
+  font-size: calc(1.325rem + 0.9vw);
+  line-height: 2.4rem;
+  font-weight: 500;
+}
+@media (min-width: 1200px) {
+  .title_size_2_bold500 {
+    font-size: 2rem;
   }
 }
 
