@@ -521,6 +521,10 @@ html:not(.js) .no-js\:is-hidden {
   display: none;
 }
 
+.margin-md {
+  margin: var(--space-md);
+}
+
 .margin-top-sm {
   margin-top: var(--space-sm);
 }
@@ -537,6 +541,14 @@ html:not(.js) .no-js\:is-hidden {
   margin-bottom: var(--space-xs);
 }
 
+.margin-bottom-sm {
+  margin-bottom: var(--space-sm);
+}
+
+.margin-bottom-md {
+  margin-bottom: var(--space-md);
+}
+
 .margin-bottom-lg {
   margin-bottom: var(--space-lg);
 }
@@ -547,6 +559,14 @@ html:not(.js) .no-js\:is-hidden {
 
 .margin-left-xxxs {
   margin-left: var(--space-xxxs);
+}
+
+.margin-left-md {
+  margin-left: var(--space-md);
+}
+
+.margin-left-xl {
+  margin-left: var(--space-xl);
 }
 
 .margin-x-auto {
