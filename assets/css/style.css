@@ -189,7 +189,7 @@ h1, h2, h3, h4, h5, h6, p, blockquote,
 a, cite, code, img, s,
 small, strong, sub, var,
 b, i, center,
-dl, dt, dd, ol, ul, li, canvas, embed,
+dl, dt, dd, ol, ul, li, canvas, details, embed,
 figure, footer, header,
 menu, nav, section, summary,
 time, audio, video {
@@ -206,7 +206,7 @@ body {
   background-color: var(--color-bg, white);
 }
 
- figure,
+ details, figure,
 footer, header, menu, nav, section, main {
   display: block;
 }
@@ -649,7 +649,7 @@ html:not(.js) .no-js\:is-hidden {
   font-size: var(--text-xxl, 2rem);
 }
 
-.font-bold {
+.font-bold, .text-bold {
   font-weight: 700;
 }
 
